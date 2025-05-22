@@ -56,9 +56,9 @@ If no clear headline is found, return {"headlines": ""}.
     apply_transforms(kg, trans)
 
     # 5. Guardar y recargar el KnowledgeGraph (opcional pero útil para verificar el enriquecimiento)
-    kg.save("knowledge_graph_deploy_prueba.json")
+    kg.save("knowledge_graph_deploy.json")
 
-def crear_testset(graph = "knowledge_graph_deploy_prueba.json" , output_path: str = "dataset.csv", testset_size: int = 120, generator_llm=None, generator_embeddings=None):
+def crear_testset(graph = "knowledge_graph_deploy.json" , output_path: str = "dataset.csv", testset_size: int = 120, generator_llm=None, generator_embeddings=None):
     """Genera un testset sintético y lo guarda en un archivo JSON."""
     # 1. Cargar KnowledgeGraph desde el archivo JSON
     loaded_kg = KnowledgeGraph.load(graph)
@@ -83,7 +83,7 @@ def crear_testset(graph = "knowledge_graph_deploy_prueba.json" , output_path: st
     testset = generator.generate(testset_size=testset_size, query_distribution=filtered_query_distribution)
     df = testset.to_pandas()
     
-    os.environ["RAGAS_APP_TOKEN"] = "apt.4054-53fd2731274f-4395-87c1-2cd16721-ebca3"
+    os.environ["RAGAS_APP_TOKEN"] = "your_token_here"  # Reemplaza con tu token real
     testset.upload()
 
 

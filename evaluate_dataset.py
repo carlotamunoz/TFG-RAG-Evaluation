@@ -47,7 +47,7 @@ def evaluar_dataset_llm(testset, rag, evaluator_llm) -> dict:
     
     metrics = [LLMContextRecall(), Faithfulness(), FactualCorrectness()]
     result = evaluate(dataset=eval_ds, metrics=metrics, llm=evaluator_llm)
-    os.environ['RAGAS_APP_TOKEN'] = 'apt.4054-53fd2731274f-4395-87c1-2cd16721-ebca3'
+    os.environ['RAGAS_APP_TOKEN'] = 'your_token_here'
     result.upload()
 
     return result
