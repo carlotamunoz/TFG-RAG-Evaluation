@@ -83,7 +83,7 @@ Todos los resultados estarán disponibles directamente en tu cuenta de RAGAS, de
 | `create_synthetic_dataset.py` | Genera conjuntos de datos sintéticos a partir del documento cargado usando LLMs. Incluye la creación de grafos de conocimiento y testsets con preguntas/respuestas simuladas.     |
 | `rag.py`                      | Implementa la arquitectura RAG: define cómo recuperar los fragmentos más relevantes y cómo el modelo genera respuestas a partir de ellos.            |
 | `evaluation.py`         | Evalúa la calidad de las respuestas del sistema usando métricas automáticas (LLM y no LLM) con la librería RAGAS. Imprime resultados y los sube a la plataforma. Sube los resultados para su análisis en la plataforma.  |
-| utils.py                 | Funciones auxiliares para procesar bloques de texto, analizar contextos de referencia y limpiar datos.  |
+| `utils.py`                 | Funciones auxiliares para procesar bloques de texto, analizar contextos de referencia y limpiar datos.  |
 | `requirements.txt`            | Lista de todas las dependencias necesarias para ejecutar el proyecto correctamente.                                                           |
 
 
