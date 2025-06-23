@@ -103,43 +103,63 @@ def evaluar_por_metricas(df, rag, evaluator_llm, evaluator_embeddings) -> dict:
 
 
     resultados = {}
-    os.environ['RAGAS_APP_TOKEN'] = 'apt.4054-53fd2731274f-4395-87c1-2cd16721-ebca3'
+    os.environ['RAGAS_APP_TOKEN'] = # YOUR_RAGAS_APP_TOKEN_HERE
     # Ejecuta la evaluación
     try:
         
-        result_llm_retrieval = evaluate(eval_ds, llm = evaluator_llm, embeddings= evaluator_embeddings, metrics=metrics_retrieval_llm, run_config=run_config)
+        result_llm_retrieval = evaluate(eval_ds, llm=evaluator_llm, embeddings=evaluator_embeddings,
+                                        metrics=metrics_retrieval_llm, run_config=run_config)
         resultados["llm_based_retrieval"] = result_llm_retrieval.to_pandas()
-        result_llm_retrieval.upload()
+        try:
+            result_llm_retrieval.upload()
+        except Exception as upload_error:
+            print(f"[WARN] Falló la subida de llm_based_retrieval: {upload_error}")
         print("Evaluación de métricas LLM-based para el RETRIEVAL:", result_llm_retrieval)
 
-        
-        result_llm_generator = evaluate(eval_ds, llm = evaluator_llm, embeddings= evaluator_embeddings, metrics=metrics_retrieval_nonllm, run_config=run_config)
-        resultados["nonllm_based_retrieval"] = result_llm_generator.to_pandas()
-        result_llm_generator.upload()
+
+
+        result_nonllm_retrieval = evaluate(eval_ds, llm=evaluator_llm, embeddings=evaluator_embeddings,
+                                        metrics=metrics_retrieval_nonllm, run_config=run_config)
+        resultados["nonllm_based_retrieval"] = result_nonllm_retrieval.to_pandas()
+        try:
+            result_nonllm_retrieval.upload()
+        except Exception as upload_error:
+            print(f"[WARN] Falló la subida de nonllm_based_retrieval: {upload_error}")
+        print("Evaluación de métricas NON-LLM-based para el RETRIEVAL:", result_nonllm_retrieval)
+
+
+        result_llm_generator = evaluate(eval_ds, llm=evaluator_llm, embeddings=evaluator_embeddings,
+                                        metrics=metrics_generation_llm, run_config=run_config)
+        resultados["llm_based_generator"] = result_llm_generator.to_pandas()
+        try:
+            result_llm_generator.upload()
+        except Exception as upload_error:
+            print(f"[WARN] Falló la subida de llm_based_generator: {upload_error}")
         print("Evaluación de métricas LLM-based para el GENERADOR:", result_llm_generator)
 
-        result_nonllm_retrieval = evaluate(eval_ds, llm = evaluator_llm, embeddings= evaluator_embeddings, metrics=metrics_generation_llm, run_config=run_config)
-        resultados["llm_based_generator"] = result_nonllm_retrieval.to_pandas()
-        result_nonllm_retrieval.upload()
-        print("Evaluación de métricas non-LLM-based para el RETRIEVAL:", result_nonllm_retrieval)
 
-        
-        result_nonllm_generator = evaluate(eval_ds, llm = evaluator_llm, embeddings= evaluator_embeddings, metrics=metrics_generation_nonllm, run_config=run_config)            
+        result_nonllm_generator = evaluate(eval_ds, llm=evaluator_llm, embeddings=evaluator_embeddings,
+                                        metrics=metrics_generation_nonllm, run_config=run_config)
         resultados["nonllm_based_generator"] = result_nonllm_generator.to_pandas()
-        result_nonllm_generator.upload()
-        print("Evaluación de métricas non-LLM-based para el GENERADOR:", result_nonllm_generator)
+        try:
+            result_nonllm_generator.upload()
+        except Exception as upload_error:
+            print(f"[WARN] Falló la subida de nonllm_based_generator: {upload_error}")
+        print("Evaluación de métricas NON-LLM-based para el GENERADOR:", result_nonllm_generator)
 
-        
-        result_plain_language = evaluate(eval_ds, llm=evaluator_llm, embeddings=None, metrics=plain_language_metrics, run_config=run_config)
+
+        result_plain_language = evaluate(eval_ds, llm=evaluator_llm, embeddings=None,
+                                        metrics=plain_language_metrics, run_config=run_config)
         resultados["plain_language"] = result_plain_language.to_pandas()
-        result_plain_language.upload()
-        print("Evaluación de texto plano:", result_plain_language/5)
-
-        
-    
+        try:
+            result_plain_language.upload()
+        except Exception as upload_error:
+            print(f"[WARN] Falló la subida de plain_language: {upload_error}")
+        print("Evaluación de texto claro (Plain Language):", result_plain_language)
 
     except Exception as e:
         print(f"Error durante la evaluación: {e}")
+
 
 
     return resultados

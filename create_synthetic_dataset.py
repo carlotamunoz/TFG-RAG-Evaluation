@@ -183,7 +183,7 @@ def generar_dataset_sintetico(docs, generator_llm=None, generator_embeddings=Non
 def crear_testset(
     graph: str = "",
     output_path: str = "",
-    testset_size: int = 20,
+    testset_size: int = 25,
     generator_llm=None,
     generator_embeddings=None,
 ):
